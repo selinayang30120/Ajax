@@ -145,6 +145,17 @@ namespace WebApplication3.Controllers
             return Json(spotsPaging);
         }
 
+        public IActionResult Categories()
+        {
+            return Json(_dbContext.Categories);
+        }
 
+        public IActionResult SpotsTitle(string keyword)
+        {
+            var spots = _dbContext.Spots.Where(s => s.SpotTitle.Contains(keyword))
+                               .Select(s => s.SpotTitle).Take(8);
+            return Json(spots);
+
+        }
     }
 }
