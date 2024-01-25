@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<h1>Homework1</h1>
+<div id="spots" class="row row-cols-1"></div>
+
+@section Scripts {
+	<script src="~/js/travel.js"></script>
+	<script>
+		console.log(spots.CommonFormat.Section);
+
+		const spot = spots.CommonFormat.Section;
+
+		const datas = spot.map(section => {
+			const { RowNumber, REF_WP, CAT1, CAT2, SERIAL_NO, MEMO_TIME, stitle, xbody, avBegin, avEnd, idpt, address, xpostDate, file } = section
+			let pic = ""
+			let picAlt = ""
+
+			if (file.img.length > 0) {
+				console.log(file.img.length)
+				pic = file.img[0].text
+				picAlt = file.img[0].description
+			}
+
+			// BOOTSTRAP-Cards
+			const cards = `<div class="col-4"><div class="card" style="width: 18rem;">
+										<img src="${pic}" class="card-img-top" alt="${picAlt}">
+										<div class="card-body">
+										<h5 class="card-title">${stitle}</h5>
+										<p class="card-text">${CAT2}</p>
+										<p class="d-inline-flex gap-1">
+										<p class="d-inline-flex gap-1">
+														<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample${RowNumber}" role="button" aria-expanded="false" aria-controls="collapseExample${RowNumber}">
+											查看更多
+										  </a>
+									</p>
+												<div class="collapse" id="collapseExample${RowNumber}">
+										  <div class="card card-body">
+													${xbody}
+										  </div>
+										</div>
+																  </div>
+									</div>
+									</div>`
+			return cards;
+		})
+
+		document.querySelector("#spots").innerHTML = datas.join('');
+
+
+	</script>
+}
